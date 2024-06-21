@@ -56,13 +56,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				getActions().getContacts()
 			},
-
-			getFormInfo: (event) => {
-				console.log(event.target)
-				event.preventDefault()
-				const formData = new FormData(event.target)
-				console.log(formData);
-			}
 		}
 	};
 };
