@@ -1,42 +1,67 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			]
+			contacts: [],
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
+			createUser: async()=> {
+				await fetch (`https://playground.4geeks.com/contact/agendas/Styoks`, {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json"
+					  }
+				})
+				console.log(fetch);
 			},
-			loadSomeData: () => {
-				/**
-					fetch().then().then(data => setStore({ "foo": data.bar }))
-				*/
+
+			getContacts: async() => {
+				
+				const result = await fetch (`https://playground.4geeks.com/contact/agendas/Styoks`)
+				
+				if (result.ok) {
+					const data = await result.json()
+					setStore({contacts: data.contacts})
+					console.log("Ya existia");
+				} else {
+					getActions().createUser()
+					console.log(result);
+				}
+
 			},
-			changeColor: (index, color) => {
-				//get the store
-				const store = getStore();
 
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
-				});
+			editContact: async(id,newContact) => {
+				await fetch (`https://playground.4geeks.com/contact/agendas/Styoks/contacts/${id}`, {
+					method: "PUT", 
+					body: JSON.stringify(newContact), 
+					headers: {"Content-Type": "application/json"}
+				})
+				
+				getActions().getContacts()
+			},
+			
+			deleteContact: async(id) => {
+				await fetch (`https://playground.4geeks.com/contact/agendas/Styoks/contacts/${id}`, {
+					method: "DELETE"
+				})
+				getActions().getContacts()
+			},
 
-				//reset the global store
-				setStore({ demo: demo });
+			addContact: async(newContact) => {
+				await fetch (`https://playground.4geeks.com/contact/agendas/Styoks/contacts/`, {
+					method: "POST", 
+					body: JSON.stringify(newContact), 
+					headers: {"Content-Type": "application/json"}
+				})
+
+				getActions().getContacts()
+			},
+
+			getFormInfo: (event) => {
+				console.log(event.target)
+				event.preventDefault()
+				const formData = new FormData(event.target)
+				console.log(formData);
 			}
 		}
 	};

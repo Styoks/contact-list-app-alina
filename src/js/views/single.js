@@ -1,26 +1,49 @@
 import React, { useState, useEffect, useContext } from "react";
-import PropTypes from "prop-types";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
 
-export const Single = props => {
+import "../../styles/demo.css";
+
+export const Edit = () => {
+	const {id} = useParams()
 	const { store, actions } = useContext(Context);
-	const params = useParams();
+	const [contact, setContact] = useState({name:"asda", address:"", email:"", phone:""})
+
+	const handleInput = (e) => {
+		setContact({...contact, [e.target.name]:e.target.value})
+	 }
+
+	const handleSubmit = (e) => {
+		e.preventDefault()
+		actions.editContact(id, contact)
+	}
+
+	useEffect(() => {
+		let con = store.contacts.find((contacto) => contacto.id == id)
+		setContact(con)}, 
+	[])
+
 	return (
-		<div className="jumbotron">
-			<h1 className="display-4">This will show the demo element: {store.demo[params.theid].title}</h1>
-
-			<hr className="my-4" />
-
-			<Link to="/">
-				<span className="btn btn-primary btn-lg" href="#" role="button">
-					Back home
-				</span>
-			</Link>
-		</div>
+		<form className="w-50 d-flex justify-content-center flex-column" onSubmit={(e) => {handleSubmit(e)}}>
+			<div className="mb-3">
+				<label htmlFor="formGroupExampleInput2" className="form-label">Name:</label>
+				<input type="text" name="name" className="form-control" placeholder={``} value={contact?.name} onChange={(e) => {handleInput(e)}}/>
+			</div>
+			<div className="mb-3">
+				<label htmlFor="formGroupExampleInput2" className="form-label">Adress:</label>
+				<input type="text" name="address" className="form-control"  placeholder="Address" value={contact?.address} onChange={(e) => {handleInput(e)}}/>
+			</div>
+			<div className="mb-3">
+				<label htmlFor="formGroupExampleInput2" className="form-label">Phone number:</label>
+				<input type="text" name="phone" className="form-control"  placeholder="Phone number" value={contact?.phone} onChange={(e) => {handleInput(e)}}/>
+			</div>
+			<div className="mb-3">
+				<label htmlFor="formGroupExampleInput2" className="form-label">Email:</label>
+				<input type="text" name="email" className="form-control"  placeholder="Email" value={contact?.email} onChange={(e) => {handleInput(e)}} />
+			</div>
+			<button type="submit" className="btn btn-primary">Submit</button>
+			<Link to="/">Or get back to contacts</Link>
+		</form>
 	);
-};
-
-Single.propTypes = {
-	match: PropTypes.object
 };
