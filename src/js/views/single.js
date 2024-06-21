@@ -27,7 +27,7 @@ export const Edit = () => {
 	}
 
 	return (
-		<form className="w-50 d-flex justify-content-center flex-column" onSubmit={(e) => {handleSubmit(e)}}>
+		<form className="w-50 d-flex justify-content-center flex-column m-auto mt-5" onSubmit={(e) => {handleSubmit(e)}}>
 			<div className="mb-3">
 				<label htmlFor="formGroupExampleInput2" className="form-label">Name:</label>
 				<input type="text" name="name" className="form-control" placeholder="Name" value={contact?.name} onChange={(e) => {handleInput(e)}}/>
@@ -38,11 +38,11 @@ export const Edit = () => {
 			</div>
 			<div className="mb-3">
 				<label htmlFor="formGroupExampleInput2" className="form-label">Phone number:</label>
-				<input type="text" name="phone" className="form-control"  placeholder="Phone number" value={contact?.phone} onChange={(e) => {handleInput(e)}}/>
+				<input type="number" name="phone" className="form-control"  placeholder="Phone number" value={contact?.phone} onChange={(e) => {handleInput(e)}}/>
 			</div>
 			<div className="mb-3">
 				<label htmlFor="formGroupExampleInput2" className="form-label">Email:</label>
-				<input type="text" name="email" className="form-control"  placeholder="Email" value={contact?.email} onChange={(e) => {handleInput(e)}} />
+				<input type="email" name="email" className="form-control"  placeholder="Email" value={contact?.email} onChange={(e) => {handleInput(e)}} />
 			</div>
 			<button type="submit" className="btn btn-primary">Submit</button>
 			<Link to="/">Or get back to contacts</Link>

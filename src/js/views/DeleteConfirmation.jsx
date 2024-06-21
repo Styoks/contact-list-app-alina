@@ -16,7 +16,7 @@ const DeleteConfirmation = ({show, onHide, id}) => {
 			<Modal.Header closeButton>
 				<Modal.Title>You are deleting the contact!!!</Modal.Title>
 			</Modal.Header>
-			<Modal.Body>Are yor sure you want to delete the contact?{id}</Modal.Body>
+			<Modal.Body>Are yor sure you want to delete the contact?</Modal.Body>
 			<Modal.Footer>
 				<Button variant="secondary" onClick={onHide}>
 					Close
